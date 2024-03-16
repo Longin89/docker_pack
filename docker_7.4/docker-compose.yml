@@ -1,0 +1,46 @@
+version: "3.5"
+
+services:
+
+  php-fpm:
+    build:
+      context: php-fpm
+    volumes:
+    - ./app:/var/www/html
+    - ./apache/php_conf:/usr/local/etc/php
+
+  apache-httpd:
+    build:
+      context: .
+      dockerfile: ./apache/Dockerfile
+    volumes:
+      - ./app:/var/www/html
+    ports:
+      - "80:80"
+    depends_on:
+      - php-fpm
+      - mysql
+
+  mysql:
+    image: mysql:8.0.36-debian
+    ports:
+    - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: rootroot
+      MYSQL_DATABASE: testdb
+      MYSQL_USER: test_user
+      MYSQL_PASSWORD: test_pass
+    volumes:
+    - ./databases/mysql:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    ports:
+    - 8080:80
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: rootroot
+    depends_on:
+      - php-fpm
+      - mysql
