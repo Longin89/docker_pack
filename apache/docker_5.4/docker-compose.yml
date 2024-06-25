@@ -7,7 +7,6 @@ services:
       context: php-fpm
     volumes:
     - ./app:/var/www/html
-    - ./apache/php_conf:/usr/local/etc/php
 
   apache-httpd:
     build:
