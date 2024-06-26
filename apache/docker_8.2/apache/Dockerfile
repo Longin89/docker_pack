@@ -1,7 +1,7 @@
 # httpd base image
 FROM httpd:2.4
 # Copy the Apache virtual host configuration file to the container
-COPY ./apache/apache.vhost.conf /usr/local/apache2/conf/extra/apache.vhost.conf
+COPY ./vhost.conf /usr/local/apache2/conf/extra/apache.vhost.conf
 
 # Enable Apache modules to ensure proper functionality
 RUN sed -i \
