@@ -1,5 +1,5 @@
 {
-    "name": "my-project,
+    "name": "my-project",
     "description": "Composer file for docker-pack",
     "type": "project",
     "require": {
