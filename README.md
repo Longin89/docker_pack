@@ -37,7 +37,7 @@
 Для начала работы со сборкой следует скопировать содержимое репозитория на компьютер с помощью команды:
 
 
-```git clone https://github.com/YourUsername/DockerPack.git```
+```git clone https://github.com/Longin89/DockerPack.git```
 
 и после этого в папке сборки выполнить команду:
 
