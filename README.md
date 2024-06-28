@@ -126,7 +126,7 @@ Since the packs has a similar file system, I will describe the folder structure 
 To start working with the pack, copy the contents of the repository to your computer using the command:
 
 
-```git clone https://github.com/YourUsername/DockerPack.git```
+```git clone https://github.com/Longin89/DockerPack.git```
 
 choose version and then run the command in the build folder:
 
