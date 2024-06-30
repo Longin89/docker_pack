@@ -1,6 +1,6 @@
 ![docker-pack](docker-pack.jpg)
-# Docker Pack by EvanLongin version 1.0!
-#### Версия 1.0 : Базовая версия для веб-разработки.
+# Docker Pack by EvanLongin version 1.1.!
+#### Версия 1.1 : Добавлен autoload в Composer
 ##### Сборка содержит компиляцию рабочих сред на основе **Docker**, позволяющих осуществлять разработку веб-приложений на основе PHP 5 / 7 / 8, используя в качестве веб-сервера **Apache** или **Nginx**, FPM в роли обработчика процессов, MySql в роли СУБД и PHPMYADMIN в качестве инструмента администрирования баз данных.
 [English description](#table-of-contents)
 
@@ -88,9 +88,9 @@
 а в Nginx - `PDO_MySql`(что подразумевает изменение типа СУБД по Вашему желанию при необходимости)
 
 
-# Docker Pack by EvanLongin version 1.0!
+# Docker Pack by EvanLongin version 1.1!
 
-#### Version 1.0: Basic version for web development.
+#### Version 1.1: Added autoload to Composer
 ##### The pack contains a compilation of working environments based on **Docker**, allowing the development of web applications based on PHP 5 / 7 / 8, using **Apache** or **Nginx** as a web server , FPM as a process handler, MySql as a DBMS and PHPMYADMIN as a database administration tool.
 
 
