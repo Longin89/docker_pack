@@ -1,7 +1,9 @@
 {
     "autoload": {
         "psr-4": {
-            "app\\": "./dev"
+            "app\\": ["../app/php/classes",
+                      "../app/php/traits",
+                      "../app/php/interfaces"]
         }
     }
 }
