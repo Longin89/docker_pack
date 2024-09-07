@@ -1,0 +1,63 @@
+.register {
+    background-color: #808080;
+}
+
+.register__title,
+.default__title {
+    @include font-patterns(#000, "Ubuntu-Regular", 4rem, normal, 400, 130%);
+    text-align: center;
+}
+
+.register__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.register__form-list {
+    margin: 0;
+    padding: .5em;
+}
+
+.register__form-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1rem auto;
+    column-gap: 1em;
+
+    label {
+        margin-bottom: 0;
+    }
+
+    &:last-child {
+        justify-content: flex-end;
+    }
+
+    &:nth-child(3) {
+        justify-content: flex-end;
+    }
+
+    &:nth-child(4) {
+        justify-content: center;
+    }
+}
+
+.register__item-button {
+    @include font-patterns(#000, "Ubuntu-Regular", 1rem, normal, 600, 130%);
+    width: 5em;
+    height: 3em;
+    border-radius: 5px;
+}
+
+.register__item-link {
+    @include font-patterns(#000, "Ubuntu-Regular", 1rem, normal, 400, 130%);
+}
+
+.form-errors {
+    display: inline-block;
+    width: 75%;
+    margin: 0 auto;
+    text-align: center;
+}

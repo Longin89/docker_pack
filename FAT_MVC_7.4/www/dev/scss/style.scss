@@ -1,0 +1,42 @@
+/* IMPORT ALL STYLES AND MIXINS HERE  */
+@import "./components/_normalize";
+@import "./components/_vars";
+@import "./components/_mixins";
+@import "./components/_header";
+@import "./components/_footer";
+@import "./components/_defaults";
+@import "./components/_fonts";
+@import "./components/_media";
+@import "./components/_registration";
+
+.default__title {
+    @include font-patterns(#000, "Connection", 4rem, normal, 700, 140%);
+    margin: 0 !important;
+}
+
+.navbar-brand {
+    @include font-patterns(#000, "EightBitDragon", 2rem !important, normal, 400, 140%);
+}
+
+.dropdown-item {
+    @include font-patterns(#000, "Pixeboy", 1.25rem, normal, 400, 140%);
+}
+
+section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.main__home {
+    // @include gradient(linear-gradient(270deg, #9b0505 -28.49%, #8871a7 83.02%), text, rgb(252, 251, 251));
+    height: calc(1080px - 30.2vh);
+    background: url("../images/game.jpg");
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size:cover;
+}
+
+.main__register {
+    background: url("../images/nightcity.jpg");
+}

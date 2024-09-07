@@ -1,0 +1,9 @@
+{
+    "Home": "home",
+    "Contacts": {
+        "My Contacts": "contacts",
+        "Add Contacts": "contacts/add"
+    },
+    "Login": "register/login",
+    "Logout": "register/logout"
+}

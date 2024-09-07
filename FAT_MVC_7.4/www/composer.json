@@ -1,0 +1,9 @@
+{
+    "autoload": {
+        "psr-4": {
+            "app\\": ["../out/php/classes",
+                      "../out/php/traits",
+                      "../out/php/interfaces"]
+        }
+    }
+}
