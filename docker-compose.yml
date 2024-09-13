@@ -1,0 +1,53 @@
+version: "3.5"
+
+services:
+
+  apache:
+    container_name: apache
+    build:
+      context: .
+      dockerfile: ./apache/Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - ./vhost.conf:/usr/local/apache2/conf/extra/apache.vhost.conf
+      - ./www:/var/www/html
+      - ./.htaccess:/var/www/html/.htaccess
+
+    depends_on:
+      - php
+      - mysql
+
+  php:
+    container_name: php
+    build: ./images/php
+    volumes:
+      - ./www:/var/www/html
+    depends_on:
+      - mysql
+
+  mysql:
+    container_name: mysql
+    image: mysql
+    ports:
+    - 3306:3306
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootroot
+      MYSQL_DATABASE: testdb
+      MYSQL_USER: test_user
+      MYSQL_PASSWORD: test_pass
+
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin
+    ports:
+      - 8080:80
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: rootroot
+    depends_on:
+      - php
+      - mysql

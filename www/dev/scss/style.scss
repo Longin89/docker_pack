@@ -1,0 +1,72 @@
+/* IMPORT ALL STYLES AND MIXINS HERE  */
+@import "./components/_normalize";
+@import "./components/_vars";
+@import "./components/_mixins";
+@import "./components/_header";
+@import "./components/_footer";
+@import "./components/_defaults";
+@import "./components/_fonts";
+@import "./components/_media";
+
+.title {
+    // @include gradient(linear-gradient(270deg, #9b0505 -28.49%, #8871a7 83.02%), text, rgb(252, 251, 251));  
+    @include font-patterns(#000, "Connection", 3rem, normal, 600, 140%);
+}
+
+.navbar-brand {
+    @include font-patterns(#000, "EightBitDragon", 2rem !important, normal, 400, 140%);
+}
+
+.dropdown-item,
+.nav-link,
+.register__item-link,
+.back__button,
+.text-white {
+    @include font-patterns(#000, "Pixeboy", 1.25rem !important, normal, 400, 140%);
+}
+
+label,
+p {
+    @include font-patterns(#000, "Connection", 1.2rem, normal, 400, 140%);
+}
+
+.btn {
+    font-family: "Connection", sans-serif !important;
+}
+
+#remember_me {
+    margin: 0 .25em;
+}
+
+.nav__username,
+td {
+    @include font-patterns(#0000ff, "Connection", 1.25rem, normal, 400, 140%);
+}
+
+th,
+.main__item-desc {
+    @include font-patterns(#000, "EightBitDragon", 1rem, normal, 400, 140%);
+}
+
+.register__form-item {
+    margin: 1rem auto;
+    column-gap: 1em;
+
+    &:last-child {
+        justify-content: flex-end;
+    }
+
+    &:nth-child(3) {
+        justify-content: flex-end;
+    }
+
+    &:nth-child(4) {
+        justify-content: center;
+    }
+}
+
+.form-errors {
+    display: inline-block;
+    width: 75%;
+    margin: 0 auto;
+}

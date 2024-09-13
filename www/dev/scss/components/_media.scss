@@ -1,0 +1,9 @@
+/*  MEDIA STYLES WILL BE HERE  */
+
+@media (max-width: 991px) {
+    nav {
+        li:last-child {
+            text-align: center;
+        }
+    }
+}
