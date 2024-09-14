@@ -11,9 +11,12 @@
   <link rel="preload" href="/fonts/Pixeboy.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/css/style.min.css" />
   <link rel="stylesheet" href="/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/css/splide.min.css" />
+  <script defer src="/js/main.bundle.js"></script>
   <script defer src="/js/bootstrap.bundle.min.js"></script>
   <script defer src="/js/jquery-3.7.1.min.js"></script>
-  <script defer src="/js/main.bundle.js"></script>
+  <script defer src="/js/splide.min.js"></script>
+  <script defer src="/js/splide-extension-auto-scroll.min.js"></script>
   <title><?= $this->siteTitle(); ?></title>
   <?= $this->content('head'); ?>
 </head>

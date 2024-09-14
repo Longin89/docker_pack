@@ -1,36 +1,144 @@
-![docker-pack](docker-pack.jpg)
-# Docker Pack by EvanLongin version 1.1.!
-#### Версия 1.1 : Добавлен autoload в Composer
-##### Сборка содержит компиляцию рабочих сред на основе **Docker**, позволяющих осуществлять разработку веб-приложений на основе PHP 5 / 7 / 8, используя в качестве веб-сервера **Apache** или **Nginx**, FPM в роли обработчика процессов, MySql в роли СУБД и PHPMYADMIN в качестве инструмента администрирования баз данных.
-[English description](#table-of-contents)
+![cover](screenshots/front.gif)
+# FAT MVC FRAMEWORK v1.0
+Фреймворк представляет собой компиляцию рабочей среды для разработки веб-приложений, состоящей из:
+#### 1. Docker (Apache + PHP-FPM, PHP 7.4.33, MySQL и PHPMYADMIN).
+#### 2. Таск раннер Gulp.
+#### 3. JS-библиотека JQuery.
+#### 4. CSS-фреймворк Bootstrap.
+#### 5. Слайдер Splide.
+**Важно! По умолчанию все библиотеки включены в файле ``head.php``, если вы не хотите их использовать - просто удалите соответствующие строки.**
+
+
+
+Проект реализован в парадигме ООП, в качестве паттерна проектирования (как видно из названия) используется *[Model-View-Controller](https://habr.com/ru/articles/150267/)*.
+
+Не претендует на какие-либо истины и регалии, создан в попытке облегчить жизнь себе и кому-нибудь еще.
+
 
 
 ## Оглавление
-1. [Структура папок](#структура-папок)
-2. [Инициализация и начало работы](#инициализация-и-начало-работы)
-3. [Запуск и управление контейнерами](#запуск-и-управление-контейнерами)
-4. [Работа с корневой папкой www](#работа-с-корневой-папкой-www)
-5. [Работа с Базой данных](#работа-с-базой-данных)
 
+1. [Структура корневой папки](#структура-корневой-папки)
+2. [Папка www и ее содержимое](#папка-www-и-ее-содержимое)
+3. [Папка dev и ее содержимое](#папка-dev-и-ее-содержимое)
+4. [Инициализация и начало работы](#инициализация-и-начало-работы)
+5. [Запуск и управление контейнерами](#запуск-и-управление-контейнерами)
+6. [Запуск и управление процессом разработки](#запуск-и-управление-процессом-разработки)
+7. [Демо](#демо)
+8. [PS](#ps)
 
-## Структура папок
+## Структура корневой папки
 
-Так как сборка имеет схожую файловую систему, я опишу структуру папок на примере Apache:
+**``apache/``** - папка, содержащая Dockerfile с устанавливаемыми модулями для apache.
 
-### apache/ - папка разработки на основе Apache &#8594;
-#### ./docker_5.4 - Сборка на основе PHP 5.4
-#### ./docker_7.4 - Сборка на основе PHP 7.4
-#### ./docker_8.2 - Сборка на основе PHP 5.4
+**``php/``** - папка, содержащая Dockerfile с настройками и предварительной установкой пакетов для PHP.
 
+**``www/``** - основная папка проекта, описывается далее.
 
-### Каждая и обозначенных папок в свою очередь имеет следующую структуру:
-#### ./apache - папка с docker-файлом настроек apache
-#### ./images - папка с образом php, в нее-же можно устанавливать все последующие образы по необходимости
-#### ./mysql-data - папка для хранения баз данных
-#### ./www - корневая папка для вашего веб-приложения (уже содержит в себе файлы, о которых будет сказано ниже)
-#### ./docker-compose.yml - файл для управления сервисами Docker
-#### ./vhost.conf - файл с настройками Apache / Nginx
+**``docker-compose.yml``** - файл описывает устанавливаемые для Docker пакеты.
+
+**``testdb.sql``** - файл базы данных MySQL, содержащий прописанные по умолчанию таблицы:  
+
+**users** - для хранения пользователей.     
+**contacts** - для хранения записей в условной адресной книге.    
+**user_sessions** - хранит сессию пользователя, в случае, если галочка **remember_me** при авторизации установлена.
+Для демонстранции в базе уже есть следующая учетная запись:
+
+Логин: ``admin``    
+Пароль: ``1111`` 
+
+**Не забудьте импортировать файл базы данных перед началом работы!**    
+После успешной установки БД в корне проекта Вы увидите папку ``mysql-data``.
+
+**``vhost.conf``** - файл настроек для apache.
+
+**``.htaccess``** - дополнительные настройки apache. В частности описание RewriteEngine.
+
 ***
+
+## Папка ``www`` и ее содержимое
+**``dev/``** - здесь содержится проект в "сыром" виде(файлы не оптимизированы / не минифицированы), содержимое описывается далее.
+
+**``out/``** - сюда компилируются файлы проекта. Выходная папка фреймворка, содержащая конечное веб-приложение (без учета БД).
+Уже содержит в себе папку **``images/``** с файлом анимации начальной заставки.
+
+**``eslint.config.mjs``** - файл с минимальным набором правил для линтера *[ESLint](https://eslint.org/)*.
+
+**``gulpfile.js``** - файл с настройками *[Gulp](https://gulpjs.com/)*.
+
+Для работы со стилями используются SCSS и различные плагины для преобразования, объединения и оптимизации CSS файлов. JavaScript обрабатывается с помощью *[Babel](https://babeljs.io/)* для обеспечения совместимости со старыми браузерами.
+
+Также включает в себя инструменты для минификации и сжатия ресурсов, такие как изображения и шрифты. Присутствуют утилиты для создания спрайтов SVG и конвертации форматов изображений.
+
+Для удобства разработки реализована синхронизация с браузером для отслеживания изменений в коде real-time и система уведомлений о завершении задач. Линтеры помогают придерживаться определенного стиля написания кода.
+
+**``package.json``** - файл содержит список устанавливаемых пакетов для *[Gulp](https://gulpjs.com/)*.
+
+**``webpack.config.js``** - файл с настройками *[Webpack](https://webpack.js.org/)*.
+
+Особенности webpack:
+Раздельные конфигурации для продакшена и разработки позволяют оптимизировать сборку под разные среды.
+В продакшен-версии используется минификация кода через TerserPlugin.
+В режиме разработки включены source-map для лучшей отладки.
+BannerPlugin добавляет информацию о файле в начало каждого обработанного файла в режиме разработки.
+По умолчанию в **``gulpfile.js``** используется режим разработки.
+
+**``.stylelintrc.json``** - файл с минимальным набором правил для линтера *[Stylelint](https://stylelint.io/)*.
+**``.stylelintignore``** - файл со списком игнорируемых типов файлов *[Stylelint](https://stylelint.io/)*.
+
+
+## Папка ``dev`` и ее содержимое
+**``index.php``** - "точка входа" в приложение, содержит в себе автозагрузчик классов (и не только), а так-же вызывает метод маршрутизатора. 
+
+**``app/``** - содержит дочерние классы "ядра" приложения, которые использует тестовый проект (разворачивающийся при первом запуске), а также json-файлы, содержащие в себе **A**ccess **C**ontrol **L**ist для доступа к меню на разных уровнях и список его пунктов.
+
+Папки **``controllers/``**, **``models/``** и **``views/``** хранят в себе контроллеры, модели и представления соответственно.
+
+![app_folder](screenshots/app_folder.png)
+
+К каждому реализованному методу написано краткое описание его функционала.
+
+![method_desc](screenshots/method_desc.png)
+
+**``config/config.php``** - содержит базовые настройки сайта и все переменные, использующиеся в проекте.
+
+**``core/``** - содержит все базовые классы, "ядро" фреймворка. У каждого метода в файлах также есть краткое описание.
+
+**``core/validators/``** - содержит в себе базовые валидаторы для обработчиков форм.
+
+**``css/``** - содержит в себе минифицированные стили для *[Bootstrap](https://getbootstrap.com/)* и *[Splide](https://splidejs.com/)*.
+
+**``fonts/src/``** - папка для конвертации файлов шрифтов (сюда помещаются исходники в формате ``ttf``, на выходе в получаем ``woff2``).
+
+**``images/src/``** - папка для оптимизации изображений, список поддерживаемых форматов описан в ``gulpfile.js``.
+
+**``js/``** - содержит файлы библиотек *[Bootstrap](https://getbootstrap.com/)*, *[Splide](https://splidejs.com/)* и *[JQuery](https://jquery.com/)*.
+
+**``js/components/``** - содержит файлы ``_functions.js``, ``_vars.js``, ``_main.js`` для пользовательских функций, переменных и основного кода соответственно.
+
+**``media/``**  - папка для хранения медиафайлов (по умолчанию в ``gulpfile.js``) прописаны только **mp3**.
+
+**``scss/``** - папка для хранения стилей. 
+
+**``style.scss``** - основной файл, в который по умолчанию импортируются все остальные.
+
+**``_defaults.scss``** - файл со стилями по умолчанию для базового проекта (как то - ширина ограничительного контейнера, размер и семейство базового шрифта, прижатие футера к низу страницы и т.д.)
+
+**``_fonts.scss``** - файл, в который через директиву ```@incliude``` импортируются пользовательские шрифты.
+
+**``_footer.scss``** - файл для "подвала" проекта.
+
+**``_header.scss``** - файл для "шапки" проекта.
+
+**``_media.scss``** - файл для медиа-запросов.
+
+**``_mixins.scss``** - файл для хранения "примесей". По умолчанию уже хранит в себе миксина для быстрого добавления / использования шрифтов, а так-же градиентов.
+
+**``_normalize.scss``** - файл нормализации, версия 8.0.1.
+
+**``_vars.scss``** - файл для хранения переменных.
+
+При разработке проекта, компилируемый на выходе **``style.min.css``** хранит в себе стили из всех вышеперечисленных файлов в неминифицированном виде. Отдельным файлом создается **style.min.css.map**, содержащий в себе карты стилей, полученные с помощью плагина *[gulp-sourcemaps](https://www.npmjs.com/package/gulp-sourcemaps)*.
 
 
 ## Инициализация и начало работы
@@ -67,112 +175,34 @@
 Войти в файловую систему контейнера:
 - `docker exec -it -i <container_name> /bin/bash`
 
-## Работа с корневой папкой ```www```
-Изначально сборка задумывалась как расширение для *[gulpPack](https://github.com/Longin89/gulpPack)*, чтобы иметь возможность заниматься версткой в php-файлах - если Вы преследуете те-же цели, то просто скопируйте содержимое папки ```PHP``` в корень папки ```www``` и далее следуйте инструкциям из *[gulpPack](https://github.com/Longin89/gulpPack)*.
-В ином случае так-же, исходные файлы проекта помещайте сюда, После запуска докера они будут доступны по ```localhost```.
+## Запуск и управление процессом разработки
+После запуска докера Вам нужно перейти с помощью командной строки перейти в папку ``www`` и установить зависимости ``Gulp`` с помощью команд :
 
-**Важно!** В папке уже находятся 3 файла:
+``cd www/``
 
-`index.php` - проверяет работоспособность PHP (показывает результат ```phpinfo()```):
+``npm i``
 
+Остальные зависимости устанавливаем с помощью команды:
 
-`db.php` - проверяет работоспособность СУБД (выводит `Connected successfully` в случае успеха)
+``gulp depends``
 
-`composer.json` - файл менеджера пакетов Composer (отсутствует для версии 5.4)
+Данная команда скопирует в папку **``out/``** все шрифты, стили библиотек, js-файлы, картинки и файл ``.htaccess``.
 
+После этого можно запустить сборку с помощью команды:
 
-## Работа с Базой данных
-Для работы с БД сборка использует связку MySql + PHPMYADMIN. Для проверки работоспособности и удобства в `docker-compose.yml` уже прописано создание тестовой бд, а так-же логина и пароля для нее (их вы можете посмотреть в самом файле, так-же как и для PHPMYADMIN).
+``gulp``
 
-В качестве интерфейсов для взаимодействия с БД в Apache-сборку интегрирован `Mysqli`,
-а в Nginx - `PDO_MySql`(что подразумевает изменение типа СУБД по Вашему желанию при необходимости)
+Фреймворк готов к работе.
 
-
-# Docker Pack by EvanLongin version 1.1!
-
-#### Version 1.1: Added autoload to Composer
-##### The pack contains a compilation of working environments based on **Docker**, allowing the development of web applications based on PHP 5 / 7 / 8, using **Apache** or **Nginx** as a web server , FPM as a process handler, MySql as a DBMS and PHPMYADMIN as a database administration tool.
+**Внимание! Если вместо превоначального экрана Вы увидете ошибку - обновите страницу!**
 
 
-## Table of contents
-1. [Folder structure](#folder-structure)
-2. [Initialization and getting started](#initialization-and-getting-started)
-3. [Launching and managing containers](#launching-and-managing-containers)
-4. [Working with the root folder www](#working-with-the-root-folder-www)
-5. [Working with the Database](#working-with-the-database)
+## Демо
+
+![Demo startup](screenshots/demo.gif)
 
 
-## Folder structure
+## PS
 
-Since the packs has a similar file system, I will describe the folder structure using Apache as an example:
-
-### apache/ - development folder based on Apache &#8594;
-#### ./docker_5.4 - Build based on PHP 5.4
-#### ./docker_7.4 - Build based on PHP 7.4
-#### ./docker_8.2 - Build based on PHP 5.4
-
-
-### Each designated folder in turn has the following structure:
-#### ./apache - folder with an apache settings
-#### ./images - folder with the php image, you can also install all subsequent images in it if necessary
-#### ./mysql-data - folder for storing databases
-#### ./www - the root folder for your web application (already contains the files that will be discussed below)
-#### ./docker-compose.yml - file for managing Docker services
-#### ./vhost.conf - file with Apache / Nginx settings
-***
-
-
-## Initialization and getting started
-To start working with the pack, copy the contents of the repository to your computer using the command:
-
-
-```git clone https://github.com/Longin89/DockerPack.git```
-
-choose version and then run the command in the build folder:
-
-```docker-compose build```
-
-to download and install all the necessary images.
-
-## Launching and managing containers
-After installation, you can manage containers using the following commands:
-
-Launch containers:
-
-- `docker-compose up -d`
-
-Stop containers:
-- `docker-compose stop`
-
-Stop and remove containers:
-- `docker-compose down`
-
-View container logs:
-- `docker-compose logs`
-
-Show container status:
-- `docker-compose ps`
-
-Enter to container`s filesystem:
-- `docker exec -it -i <container_name> /bin/bash`
-
-
-## Working with the root folder ```www```
-Initially, the pack was intended as an extension for *[gulpPack](https://github.com/Longin89/gulpPack)*, in order to be able to do layout in PHP files - if you are pursuing the same goals, then just copy the contents of the  `PHP` folder to the root of the ```www``` folder and then follow the instructions from *[gulpPack](https://github.com/Longin89/gulpPack)*.
-Otherwise, place the project source files here. After running Docker, they will be available via ```localhost```.
-
-**Important!** The folder already contains 3 files:
-
-`index.php` - checks the functionality of PHP (shows the result of ```phpinfo()```):
-
-
-`db.php` - checks the functionality of the DBMS (prints `Connected successfully` if successful)
-
-`composer.json` - Composer package manager file (missing for version 5.4)
-
-
-## Working with the Database
-To work with the database, the pack uses the MySql + PHPMYADMIN combination. To check functionality and convenience, `docker-compose.yml` already specifies the creation of a test database, as well as a login and password for it (you can see them in the file itself, just like for PHPMYADMIN).
-
-`Mysqli` is integrated into the Apache assembly as interfaces for interacting with the database,
-and in Nginx - `PDO_MySql` (which means changing the DBMS type according to your desire, if necessary)
+В случае возникновения любых вопросов или проблем - просьба писать в issues.
+С радостью рассмотрю идеи по рефакторингу кода.

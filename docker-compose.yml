@@ -20,7 +20,7 @@ services:
 
   php:
     container_name: php
-    build: ./images/php
+    build: ./php
     volumes:
       - ./www:/var/www/html
     depends_on:

@@ -40,7 +40,7 @@ class RegisterController extends Controller
         $this->view->render('register/login');
     }
 
-    public function logoutAction() // Этот метод отвечает за выход пользователя из системы.
+    public function logoutAction() // Отвечает за выход пользователя из системы.
     {
         if (Users::currentUser()) {
             Users::currentUser()->logout();
@@ -48,7 +48,7 @@ class RegisterController extends Controller
         Router::redirect('register/login');
     }
 
-    public function RegisterAction() // Этот метод обрабатывает процесс регистрации нового пользователя.
+    public function RegisterAction() // Обрабатывает процесс регистрации нового пользователя.
     {
         $newUser = new Users();
         if ($this->request->isPost()) {

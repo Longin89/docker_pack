@@ -67,9 +67,11 @@
 
 
 
-    const bootstrapStyles = (callback) => {
+    const stylesAddons = (callback) => {
         return pipeline(
-            src("./dev/css/bootstrap.min.css",),
+            src(["./dev/css/bootstrap.min.css",
+                 "./dev/css/splide.min.css"
+            ]),
             dest("./out/css"),
             callback
         );
@@ -82,6 +84,8 @@
         return pipeline(
             src(["./dev/js/bootstrap.bundle.min.js",
                  "./dev/js/jquery-3.7.1.min.js",
+                 "./dev/js/splide.min.js",
+                 "./dev/js/splide-extension-auto-scroll.min.js"
             ]),
             dest("./out/js"),
             callback
@@ -242,8 +246,7 @@
 
     const watcher = () => {
         browserSync.init({
-            proxy: "localhost",
-            notify: false
+            proxy: "localhost"
         });
         watch(["./dev/scss/**/*.scss"], styles);
         watch(["./dev/js/components/*.js"], scripts);
@@ -252,7 +255,7 @@
         watch(["./dev/images/src/svg"], sprite);
         watch(["./dev/fonts/src/*.*"], fonts);
         watch(["./dev/**/*.php"], php);
-        watch(["./out/**/*.php"]).on("change", browserSync.reload);
+        watch(["./out/**/*.*"]).on("change", browserSync.reload);
     };
 
 
@@ -262,6 +265,6 @@
 
     module.exports = {
         "default": parallel(php, styles, scripts, acl, images, sprite, watcher),
-        "depends": series(fonts, bootstrapStyles, jsAddons, htaccess, images),
+        "depends": series(fonts, stylesAddons, jsAddons, htaccess, images),
         "zip": series(zipfiles)
     };
