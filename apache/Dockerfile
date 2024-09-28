@@ -16,7 +16,4 @@ RUN sed -i \
 
 # Include the virtual host configuration file in the main Apache configuration
 RUN echo "Include /usr/local/apache2/conf/extra/apache.vhost.conf" >> /usr/local/apache2/conf/httpd.conf
-
-# Копируем .htaccess и активируем mod_rewrite
-COPY ./.htaccess /var/www/html/
 RUN sed -i '/LoadModule rewrite_module/s/^#//g' /usr/local/apache2/conf/httpd.conf

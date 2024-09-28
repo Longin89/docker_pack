@@ -20,7 +20,7 @@ class Input
 
     public function isGet() // Использует getRequestMethod() для получения метода запроса.
     {
-        return $this->getRequestMethod() === 'Get';
+        return $this->getRequestMethod() === 'GET';
     }
 
     public function getRequestMethod() // Возвращает метод запроса.

@@ -85,7 +85,6 @@
             src(["./dev/js/bootstrap.bundle.min.js",
                  "./dev/js/jquery-3.7.1.min.js",
                  "./dev/js/splide.min.js",
-                 "./dev/js/splide-extension-auto-scroll.min.js"
             ]),
             dest("./out/js"),
             callback
@@ -102,7 +101,7 @@
     const styles = (callback) => {
         return pipeline(
             src([
-                //"./node_modules/@splidejs/splide/dist/css/splide.min.css",
+                "./node_modules/@splidejs/splide/dist/css/splide.min.css",
                 "./dev/scss/**/*.scss",
             ]),
             sourcemaps.init(),
@@ -122,6 +121,7 @@
                 overrideBrowserslist: ["last 5 versions"]
             }),
             concat("style.min.css"),
+            sourcemaps.write(),
             dest("./out/css"),
             browserSync.stream(),
             callback
@@ -138,7 +138,7 @@
     const scripts = (callback) => {
         return pipeline(
         src([
-                //"./node_modules/@splidejs/splide/dist/js/splide.js",
+                "./node_modules/@splidejs/splide/dist/js/splide.js",
                 "./dev/js/components/*.js"
             ]),
             plumber({
@@ -255,7 +255,7 @@
         watch(["./dev/images/src/svg"], sprite);
         watch(["./dev/fonts/src/*.*"], fonts);
         watch(["./dev/**/*.php"], php);
-        watch(["./out/**/*.*"]).on("change", browserSync.reload);
+        watch(["./out/**/*.php"]).on("change", browserSync.reload);
     };
 
 

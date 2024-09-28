@@ -7,7 +7,7 @@ const TerserPlugin = require("terser-webpack-plugin");
 const config = {
     mode: "production",
     entry: {
-        main: [/*'./node_modules/@splidejs/splide/dist/js/splide.min.js',*/ "./dev/js/components/_vars.js", "./dev/js/components/_functions.js", "./dev/js/components/_main.js"]
+        main: ["./dev/js/components/_vars.js", "./dev/js/components/_functions.js", "./dev/js/components/_main.js"]
     },
     output: {
         filename: "main.bundle.js",
@@ -29,7 +29,7 @@ const config = {
 const devConfig = {
     mode: "development",
     entry: {
-        main: [/*'./node_modules/@splidejs/splide/dist/js/splide.min.js',*/ "./dev/js/components/_vars.js", "./dev/js/components/_functions.js", "./dev/js/components/_main.js"]
+        main: ["./dev/js/components/_vars.js", "./dev/js/components/_functions.js", "./dev/js/components/_main.js"]
     },
     output: {
         filename: "main.bundle.js",
