@@ -35,8 +35,5 @@
     "terser-webpack-plugin": "^5.3.10",
     "webpack": "5.90.3",
     "webpack-stream": "7.0.0"
-  },
-  "dependencies": {
-    "@splidejs/splide": "^4.1.4"
   }
 }

@@ -1,19 +1,30 @@
 # httpd base image
-FROM httpd:2.4
+FROM ubuntu/apache2:latest
+
+# Устанавливаем OpenSSL
+RUN apt update && apt install -y openssl
+
+# Создаем директорию для SSL-сертификатов
+RUN mkdir -p /etc/apache2/ssl/localhost
+
+# Generate cert
+RUN openssl req -new -x509 -days 1461 -nodes -newkey rsa:2048 -out /etc/apache2/ssl/localhost/server.crt -keyout /etc/apache2/ssl/localhost/server.key -subj \
+    "/C=RU/ST=SPb/L=SPb/O=Global Security/OU=IT Department/CN=localhost/CN=HomeLab"
+
+# Удаляем стандартный конфигурационный файл Apache
+RUN rm /etc/apache2/sites-enabled/000-default.conf
+
 # Copy the Apache virtual host configuration file to the container
+COPY ./vhost.conf /etc/apache2/sites-available/apache.vhost.conf
 
-COPY ./vhost.conf /usr/local/apache2/conf/extra/apache.vhost.conf
+# Создаем символическую ссылку на файл конфигурации виртуального хоста в sites-enabled
+RUN ln -s /etc/apache2/sites-available/apache.vhost.conf /etc/apache2/sites-enabled/apache.vhost.conf
 
-# Enable Apache modules to ensure proper functionality
-RUN sed -i \
-   # Uncomment the configuration for mod_deflate to enable compression
-    -e '/#LoadModule deflate_module/s/^#//g' \
-    # Uncomment the configuration for mod_proxy to enable proxying capabilities
-    -e '/#LoadModule proxy_module/s/^#//g' \
-    # Uncomment the configuration for mod_proxy_fcgi to enable FastCGI proxy module
-    -e '/#LoadModule proxy_fcgi_module/s/^#//g' \
-    /usr/local/apache2/conf/httpd.conf
+# Включаем необходимые модули Apache
+RUN a2enmod deflate proxy proxy_fcgi rewrite ssl socache_shmcb http2
 
-# Include the virtual host configuration file in the main Apache configuration
-RUN echo "Include /usr/local/apache2/conf/extra/apache.vhost.conf" >> /usr/local/apache2/conf/httpd.conf
-RUN sed -i '/LoadModule rewrite_module/s/^#//g' /usr/local/apache2/conf/httpd.conf
+# Копируем .htaccess
+COPY ./.htaccess /var/www/html/
+
+# Проверяем конфигурацию Apache
+RUN apache2ctl -t
